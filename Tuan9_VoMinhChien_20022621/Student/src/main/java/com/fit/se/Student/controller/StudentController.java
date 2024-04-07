@@ -1,0 +1,32 @@
+package com.fit.se.Student.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.fit.se.Student.service.StudentService;
+
+import io.github.bucket4j.Bucket;
+
+@RestController
+public class StudentController {
+	@Autowired
+	private StudentService service;
+	
+	@Autowired
+	private Bucket bucket;
+	
+	@GetMapping("/hello")
+	public String hello() {
+		return service.sayHello();
+	}
+	
+	@GetMapping("/rate")
+	public String rateLimiter() {
+		if(bucket.tryConsume(1)) {
+			return service.sayHello();
+		}else {
+			return "Rate limit request";
+		}
+	}
+}

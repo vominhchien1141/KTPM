@@ -1,0 +1,5 @@
+package com.fit.se.Student.config;
+
+public class RestemplateConfig {
+
+}
